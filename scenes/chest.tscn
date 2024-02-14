@@ -1,8 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://g2j0bwg1yw83"]
 
-[ext_resource type="Texture2D" uid="uid://bl3cdrh5s4ul" path="res://assets/objects/chest.png" id="1_k0mse"]
+[ext_resource type="Texture2D" uid="uid://bhkleqouqxj8n" path="res://assets/objects/chest_256x128.png" id="1_f4mha"]
 
 [node name="Chest" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_k0mse")
+texture = ExtResource("1_f4mha")
+offset = Vector2(2.08165e-12, -100)
