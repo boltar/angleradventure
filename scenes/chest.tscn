@@ -1,9 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://g2j0bwg1yw83"]
+[gd_scene load_steps=3 format=3 uid="uid://g2j0bwg1yw83"]
 
 [ext_resource type="Texture2D" uid="uid://bhkleqouqxj8n" path="res://assets/objects/chest_256x128.png" id="1_f4mha"]
+[ext_resource type="Script" path="res://scenes/chest.gd" id="1_vclcm"]
 
 [node name="Chest" type="Node2D"]
+script = ExtResource("1_vclcm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_f4mha")
 offset = Vector2(2.08165e-12, -100)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -110.0
+offset_top = -177.0
+offset_right = -70.0
+offset_bottom = -154.0
+text = "fish count : 0"

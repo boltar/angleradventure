@@ -32,8 +32,9 @@ var fish_names = ["Atlantic Bass",
 var sprites = []
 var fish_inventory = []
 var num_caught = 0
-const MAX_FISH = 8
+const MAX_FISH = 18
 const MAX_FISH_TYPE = 16
+var line_end = Vector2(1, 0)
 
 func _init():
 	for i in range(MAX_FISH_TYPE):
@@ -42,8 +43,8 @@ func _init():
 		sprites.append(load(fish_png))
 
 func get_fish_inv_coordinate(num_caught):
-	const HORIZ_LIMIT = 4
-	const VERT_LIMIT = 2
+	const HORIZ_LIMIT = 6
+	const VERT_LIMIT = 3
 	
 	var x = (num_caught - 1) % HORIZ_LIMIT
 	var y = (num_caught - 1) / HORIZ_LIMIT
@@ -58,21 +59,33 @@ func _process(delta):
 	if Input.is_key_label_pressed(KEY_ESCAPE):
 		$Chest.visible = false
 		
+		for child in $Chest.get_children():
+			child.queue_free()
+	
 	if Input.is_action_just_pressed("ui_accept"):
-		num_caught += 1
 		if (num_caught > MAX_FISH):
 			return
+		num_caught += 1
+		#$Chest.set_val(num_caught)
+		$FishingAnimation.draw_me()
 		var i = rng.randi_range(0,15)
 		print(fish_names[i])
 		var my_sprite = Sprite2D.new()
 		my_sprite.texture = sprites[i] 
-		my_sprite.scale = Vector2(1.5,1.5)
+		my_sprite.scale = Vector2(1,1)
 		#my_sprite.offset = Vector2(-20,16*(num_caught+1))
 		var v = get_fish_inv_coordinate(num_caught)
 		v *= 32
-		my_sprite.offset = v + Vector2(-52,-82)
 		$Chest.add_child(my_sprite)
+		my_sprite.position = v + Vector2(-85,-125)
 		
+		line_end.x += 10
+		queue_redraw()
+		
+
+func _draw():
+	draw_line(Vector2(0,0), line_end, Color.WHITE, 1.0)
+	
 func _physics_process(delta):
 	velocity.x = Input.get_axis("ui_left", "ui_right") * WALK_SPEED * WALK_SPEED_MULTIPLIER
 	velocity.y = Input.get_axis("ui_up", "ui_down") * WALK_SPEED * WALK_SPEED_MULTIPLIER
