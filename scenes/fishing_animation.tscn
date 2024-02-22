@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfl3vffl113p6"]
+
+[ext_resource type="Script" path="res://scripts/fishing_animation.gd" id="1_2tsf3"]
+[ext_resource type="Texture2D" uid="uid://c8vlrrkw0jpfg" path="res://assets/fish/fish015.png" id="1_khcms"]
+
+[node name="FishingAnimation" type="Node2D"]
+script = ExtResource("1_2tsf3")
+
+[node name="p0" type="Node2D" parent="."]
+position = Vector2(13, 0)
+
+[node name="p1" type="Node2D" parent="."]
+position = Vector2(143, -114)
+
+[node name="p2" type="Node2D" parent="."]
+position = Vector2(202, 0)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(13, 0)
+texture = ExtResource("1_khcms")
