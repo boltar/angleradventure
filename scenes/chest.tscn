@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://g2j0bwg1yw83"]
 
+[ext_resource type="Script" path="res://scripts/chest.gd" id="1_82l4v"]
 [ext_resource type="Texture2D" uid="uid://bhkleqouqxj8n" path="res://assets/objects/chest_256x128.png" id="1_f4mha"]
-[ext_resource type="Script" path="res://scenes/chest.gd" id="1_vclcm"]
 
 [node name="Chest" type="Node2D"]
-script = ExtResource("1_vclcm")
+script = ExtResource("1_82l4v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_f4mha")

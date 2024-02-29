@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bt13jnyn76mn8"]
 
-[ext_resource type="Script" path="res://scenes/fish.gd" id="1_bil0a"]
+[ext_resource type="Script" path="res://scripts/fish.gd" id="1_2jmr1"]
 
 [node name="Fish" type="Node2D"]
-script = ExtResource("1_bil0a")
+script = ExtResource("1_2jmr1")
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0

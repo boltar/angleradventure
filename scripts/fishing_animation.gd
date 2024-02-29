@@ -6,18 +6,28 @@ extends Node2D
 @onready var p_2 = $p2.position
 @onready var sprite = $Sprite
 @onready var line : Line2D
+@onready var p1_init_pos = p_1
 
 	
 var time = 0
 var line_started = false
 var line_done = false
-func draw_me():
-	if line_started == false:
-		line = Line2D.new()
-		line.width = 1
-		add_child(line)
-		line_started = true
+func clear_line():
+	for child in get_children():
+		if child is Line2D:
+			child.queue_free()
 
+func draw_me():
+	print("draw_me called")
+	if line_started:
+		#clear_line()
+		return
+		
+	line = Line2D.new()
+	line.width = 1
+	add_child(line)
+	line_started = true
+		
 func bezier(t):
 	var q0 = p_0.lerp(p_1, t)
 	var q1 = p_1.lerp(p_2, t)
@@ -30,6 +40,8 @@ func draw_curve():
 func _draw():
 	if line_started == false:
 		return
+	#if line_done:
+		#return
 		
 	var points = [p_0]
 	var num_slices = 10
@@ -46,13 +58,22 @@ func _physics_process(delta):
 	if line_started == false:
 		return
 		
+		#remove_child(line)
 	if line_done:
-		remove_child(line)
+		for child in get_children():
+			if child is Line2D:
+				child.queue_free()
+	
 		draw_curve()
 		if p_1.y < 0:
 			$p1.position += Vector2(0, 100 * delta)
 			p_1 = $p1.position
-		
+		else:
+			line_done = false
+			line_started = false
+			time = 0
+			$p1.position = p1_init_pos
+			p_1 = $p1.position
 		return
 		
 	sprite.position = bezier(time)
@@ -63,10 +84,5 @@ func _physics_process(delta):
 	if time >= 1:
 		time = 1
 		line_done = true
-	
-	
-	
-	#if line_done:
-	#p_1 += Vector2(0, 10)
 	
 		

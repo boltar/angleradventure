@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cjvf8fflgan5h"]
+[gd_scene load_steps=33 format=3 uid="uid://cjvf8fflgan5h"]
 
 [ext_resource type="Texture2D" uid="uid://o2k0yxk3c30w" path="res://assets/32x32/[A]_type1/pipo-map001_at-mori.png" id="1_ic0ic"]
 [ext_resource type="Texture2D" uid="uid://bn8d180vlcq3i" path="res://assets/32x32/[A]_type1/pipo-map001_at-kusa.png" id="1_v0ebg"]
@@ -9,8 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://yllxjxe8hoq8" path="res://assets/fish/fish000.png" id="7_ocype"]
 [ext_resource type="PackedScene" uid="uid://dfl3vffl113p6" path="res://scenes/fishing_animation.tscn" id="7_vlx08"]
 [ext_resource type="Texture2D" uid="uid://caalb1mw73ewy" path="res://assets/fish/fish001.png" id="8_bm4hl"]
+[ext_resource type="PackedScene" uid="uid://b5iy1njsol6iw" path="res://scenes/inventory_button.tscn" id="9_gf7ho"]
 [ext_resource type="Texture2D" uid="uid://qjamf61lra4g" path="res://assets/fish/fish002.png" id="9_xfl0v"]
 [ext_resource type="Texture2D" uid="uid://cb2ixeikclwdy" path="res://assets/fish/fish003.png" id="10_705hm"]
+[ext_resource type="PackedScene" uid="uid://bqsvt7c57lujq" path="res://scenes/cast_button.tscn" id="10_eei85"]
 [ext_resource type="Texture2D" uid="uid://cj2iof2t03fw4" path="res://assets/fish/fish004.png" id="11_fh63d"]
 [ext_resource type="Texture2D" uid="uid://c8avmf8srrng8" path="res://assets/fish/fish005.png" id="12_6ip4d"]
 [ext_resource type="Texture2D" uid="uid://dhr0i8v1ewm7l" path="res://assets/fish/fish006.png" id="13_4hfsc"]
@@ -23,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://d3la0xgrojisi" path="res://assets/fish/fish013.png" id="20_v1pd8"]
 [ext_resource type="Texture2D" uid="uid://x3thllnx5sss" path="res://assets/fish/fish014.png" id="21_autu1"]
 [ext_resource type="Texture2D" uid="uid://c8vlrrkw0jpfg" path="res://assets/fish/fish015.png" id="22_j6her"]
+[ext_resource type="PackedScene" uid="uid://c2pqplw642pl6" path="res://scenes/joystick.tscn" id="24_pf4wt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ebffa"]
 resource_name = "trees"
@@ -558,13 +561,23 @@ scale = Vector2(4, 4)
 position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_lkki4")
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-
 [node name="Chest" parent="Player" instance=ExtResource("7_4yy17")]
 visible = false
 position = Vector2(-22, 8)
 
 [node name="FishingAnimation" parent="Player" instance=ExtResource("7_vlx08")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Joystick" parent="Player/Camera2D" instance=ExtResource("24_pf4wt")]
+position = Vector2(-1, 112.25)
+scale = Vector2(0.25, 0.25)
+
+[node name="InventoryButton" parent="Player/Camera2D" instance=ExtResource("9_gf7ho")]
+position = Vector2(74.75, 95.25)
+
+[node name="CastButton" parent="Player/Camera2D" instance=ExtResource("10_eei85")]
+position = Vector2(66.75, 37)
 
 [node name="Objects" type="Node2D" parent="."]
 visible = false
