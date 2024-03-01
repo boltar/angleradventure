@@ -11,6 +11,7 @@ offset_left = -11.0
 offset_top = -2.0
 offset_right = 124.0
 offset_bottom = 54.0
+size_flags_horizontal = 0
 text = "Inventory"
 icon = ExtResource("2_ex25f")
 

@@ -1,12 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt13jnyn76mn8"]
+[gd_scene load_steps=3 format=3 uid="uid://bt13jnyn76mn8"]
 
 [ext_resource type="Script" path="res://scripts/fish.gd" id="1_2jmr1"]
+[ext_resource type="Texture2D" uid="uid://yllxjxe8hoq8" path="res://assets/fish/fish000.png" id="2_s33q0"]
 
 [node name="Fish" type="Node2D"]
 script = ExtResource("1_2jmr1")
 
 [node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+y_sort_enabled = true
+offset_left = -16.0
+offset_top = 8.0
+offset_right = 121.0
+offset_bottom = 31.0
+scale = Vector2(1, 0.980392)
+text = "sample fish name"
+horizontal_alignment = 1
 
 [node name="FishSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_s33q0")

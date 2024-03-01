@@ -570,14 +570,14 @@ position = Vector2(-22, 8)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Joystick" parent="Player/Camera2D" instance=ExtResource("24_pf4wt")]
-position = Vector2(-1, 112.25)
+position = Vector2(-57.5, 149.75)
 scale = Vector2(0.25, 0.25)
 
 [node name="InventoryButton" parent="Player/Camera2D" instance=ExtResource("9_gf7ho")]
-position = Vector2(74.75, 95.25)
+position = Vector2(48.25, 137.25)
 
 [node name="CastButton" parent="Player/Camera2D" instance=ExtResource("10_eei85")]
-position = Vector2(66.75, 37)
+position = Vector2(37.25, 84.25)
 
 [node name="Objects" type="Node2D" parent="."]
 visible = false

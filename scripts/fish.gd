@@ -3,7 +3,10 @@ class_name Fish
 #class_name Fish
 func update_sprite(texture):
 	$FishSprite.texture = texture
-	
+
+func update_name(name):
+	$Label.text = name
+	$Label.scale = Vector2(0.25, 0.25)
 #func set_position(pos):
 	#$FishSprite.position = pos
 	

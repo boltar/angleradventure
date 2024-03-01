@@ -7,13 +7,13 @@ const WALK_SPEED = 800
 var rng = RandomNumberGenerator.new()
 var fish_names = ["Atlantic Bass",
 "Clownfish", 
-"Dab",
+"Flounder",
 "Sea Spider",
 "Blue Gill",
 "Guppy",
-"Freshwater Snail",
+"Snail",
 "Axolotl",
-"High Fin Banded Shark",
+"Shark",
 "Golden Tench",
 "Moss Ball",
 "Plastic Bag",
@@ -54,7 +54,7 @@ func _on_cast_button_pressed():
 		var fish = fish_scene.instantiate()
 		
 		fish.update_sprite(sprites[i])
-		
+		fish.update_name(fish_names[i])
 		var v = get_fish_inv_coordinate(num_caught)
 		v *= 32
 		$Chest.add_child(fish)
