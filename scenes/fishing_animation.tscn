@@ -10,10 +10,10 @@ script = ExtResource("1_2tsf3")
 position = Vector2(13, 0)
 
 [node name="p1" type="Node2D" parent="."]
-position = Vector2(143, -114)
+position = Vector2(14, -100)
 
 [node name="p2" type="Node2D" parent="."]
-position = Vector2(202, 0)
+position = Vector2(15, 2.08165e-12)
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(13, 0)

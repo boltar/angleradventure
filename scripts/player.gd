@@ -42,30 +42,11 @@ func _on_inventory_button_pressed(is_showing):
 	
 	if is_showing == false:
 		clear_all_fish()
-	
-func _on_cast_button_pressed():
-		num_caught += 1
-		if (num_caught > MAX_FISH):
-			return
-		$Chest.set_val(num_caught)
-		$FishingAnimation.draw_me()
-		var i = rng.randi_range(0,15)
-		print(fish_names[i])
-		var fish = fish_scene.instantiate()
-		
-		fish.update_sprite(sprites[i])
-		fish.update_name(fish_names[i])
-		var v = get_fish_inv_coordinate(num_caught)
-		v *= 32
-		$Chest.add_child(fish)
-		fish.set_position(v + Vector2(-85,-125))
-		
-		queue_redraw()
-		
-	
+			
 func _ready():
 	inv_button.inventory_button_pressed.connect(_on_inventory_button_pressed)
 	cast_button.cast_button_pressed.connect(_on_cast_button_pressed)
+	cast_button.cast_button_released.connect(_on_cast_button_released)
 	
 	for i in range(MAX_FISH_TYPE):
 		var fish_png = "res://assets/fish/fish%03d.png" % i
@@ -118,3 +99,27 @@ func _physics_process(delta):
 func _on_water_entered():
 	print("water entered")
 	pass # Replace with function body.
+
+func _on_cast_button_pressed():
+	print_debug("cast button pressed")
+	
+func _on_cast_button_released(distance):
+	print_debug("cast button released: ", distance)
+	
+	num_caught += 1
+	if (num_caught > MAX_FISH):
+		return
+	$Chest.set_val(num_caught)
+	$FishingAnimation.start_drawing(distance)
+	var i = rng.randi_range(0,15)
+	print(fish_names[i])
+	var fish = fish_scene.instantiate()
+	
+	fish.update_sprite(sprites[i])
+	fish.update_name(fish_names[i])
+	var v = get_fish_inv_coordinate(num_caught)
+	v *= 32
+	$Chest.add_child(fish)
+	fish.set_position(v + Vector2(-85,-125))
+	
+	queue_redraw()
