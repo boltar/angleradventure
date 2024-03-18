@@ -1,5 +1,7 @@
 extends Node2D
 
-var posVector : Vector2
+var pos_vector: Vector2
+
+
 func is_pressing():
 	return $Knob.pressing
