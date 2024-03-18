@@ -18,7 +18,7 @@ func _process(delta):
 			distance = MAX_DISTANCE
 	else:
 		distance = 0
-		
+
 func _on_button_button_up():
 	print_debug("on button released")
 	cast_button_released.emit(distance)

@@ -6,7 +6,7 @@ const GRAVITY = 200.0
 const WALK_SPEED = 800
 var rng = RandomNumberGenerator.new()
 var fish_names = ["Atlantic Bass",
-"Clownfish", 
+"Clownfish",
 "Flounder",
 "Sea Spider",
 "Blue Gill",
@@ -39,26 +39,26 @@ const MAX_FISH_TYPE = 16
 
 func _on_inventory_button_pressed(is_showing):
 	$Chest.visible = is_showing
-	
+
 	if is_showing == false:
 		clear_all_fish()
-			
+
 func _ready():
 	inv_button.inventory_button_pressed.connect(_on_inventory_button_pressed)
 	cast_button.cast_button_pressed.connect(_on_cast_button_pressed)
 	cast_button.cast_button_released.connect(_on_cast_button_released)
-	
+
 	for i in range(MAX_FISH_TYPE):
 		var fish_png = "res://assets/fish/fish%03d.png" % i
 		print(fish_png)
 		sprites.append(load(fish_png))
 
-func get_fish_inv_coordinate(num_caught):
+func get_fish_inv_coordinate(fish_count):
 	const HORIZ_LIMIT = 6
 	const VERT_LIMIT = 3
-	
-	var x = (num_caught - 1) % HORIZ_LIMIT
-	var y = (num_caught - 1) / HORIZ_LIMIT
+
+	var x = (fish_count - 1) % HORIZ_LIMIT
+	var y = (fish_count - 1) / HORIZ_LIMIT
 	if (y > VERT_LIMIT):
 		y = VERT_LIMIT-1;
 	return Vector2(x, y)
@@ -69,30 +69,30 @@ func clear_all_fish():
 			child.queue_free()
 	num_caught = 0
 	$Chest.set_val(num_caught)
-	
-func _process(delta):
+
+func _process(_delta):
 	if Input.is_key_label_pressed(KEY_I):
 		$Chest.visible = true
-		
+
 	if Input.is_key_label_pressed(KEY_ESCAPE):
 		$Chest.visible = false
 		clear_all_fish()
 
 func _draw():
 	pass
-	
-func _physics_process(delta):
-	
+
+func _physics_process(_delta):
+
 	velocity.x = Input.get_axis("ui_left", "ui_right") * WALK_SPEED
 	velocity.y = Input.get_axis("ui_up", "ui_down") * WALK_SPEED
-	
+
 	if joystick.is_pressing():
 		var direction = joystick.posVector
 		if direction:
 			velocity = direction * WALK_SPEED
 		else:
 			velocity = Vector2(0,0)
-		
+
 	move_and_slide()
 
 
@@ -102,10 +102,10 @@ func _on_water_entered():
 
 func _on_cast_button_pressed():
 	print_debug("cast button pressed")
-	
+
 func _on_cast_button_released(distance):
 	print_debug("cast button released: ", distance)
-	
+
 	num_caught += 1
 	if (num_caught > MAX_FISH):
 		return
@@ -114,12 +114,12 @@ func _on_cast_button_released(distance):
 	var i = rng.randi_range(0,15)
 	print(fish_names[i])
 	var fish = fish_scene.instantiate()
-	
+
 	fish.update_sprite(sprites[i])
 	fish.update_name(fish_names[i])
 	var v = get_fish_inv_coordinate(num_caught)
 	v *= 32
 	$Chest.add_child(fish)
 	fish.set_position(v + Vector2(-85,-125))
-	
+
 	queue_redraw()

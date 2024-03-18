@@ -20,9 +20,9 @@ func _process(delta):
 			global_position.x = parent.global_position.x + cos(angle)*maxLength
 			global_position.y = parent.global_position.y + sin(angle)*maxLength
 		calculate_vector()
-		
+
 	else:
-		global_position = lerp(global_position, parent.global_position, delta*50)	
+		global_position = lerp(global_position, parent.global_position, delta*50)
 		parent.posVector = Vector2(0,0)
 
 func calculate_vector():
@@ -32,10 +32,10 @@ func calculate_vector():
 		parent.posVector.x = xdiff/maxLength
 	if abs(ydiff) >= deadzone:
 		parent.posVector.y = ydiff/maxLength
-		
+
 
 func _on_button_button_down():
 	pressing = true
-	
+
 func _on_button_button_up():
 	pressing = false
