@@ -22,7 +22,9 @@ func handle_line_released():
 	print_debug("line released")
 
 
-func start_drawing(distance):
+# h_flip = false --> RIGHT
+#          true  --> LEFT
+func start_drawing(distance, h_flip):
 	print_debug("at start_drawing")
 	if cast_state == EnumCastState.FLYING or cast_state == EnumCastState.SETTLING:
 		return
@@ -33,9 +35,13 @@ func start_drawing(distance):
 	line.width = 1
 	add_child(line)
 	_distance = distance
+	var cast_direction = 1
+	if h_flip:
+		cast_direction = -1
+
 	$p1.position.y = -_distance / 2
-	$p1.position.x += _distance / 2
-	$p2.position.x += _distance
+	$p1.position.x += cast_direction * _distance / 2
+	$p2.position.x += cast_direction * _distance
 
 
 func bezier(t):

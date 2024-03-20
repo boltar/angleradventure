@@ -98,6 +98,10 @@ func _physics_process(_delta):
 		else:
 			velocity = Vector2(0, 0)
 
+	if velocity.x > 0:
+		$Sprite2D.flip_h = false
+	elif velocity.x < 0:
+		$Sprite2D.flip_h = true
 	move_and_slide()
 
 
@@ -116,7 +120,7 @@ func _on_cast_button_released(distance):
 	if num_caught > MAX_FISH:
 		return
 	$Chest.set_val(num_caught)
-	$FishingAnimation.start_drawing(distance)
+	$FishingAnimation.start_drawing(distance, $Sprite2D.flip_h)
 	var i = rng.randi_range(0, 15)
 	print(fish_names[i])
 	var fish = fish_scene.instantiate()
