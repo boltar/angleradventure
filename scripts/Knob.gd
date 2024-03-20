@@ -1,7 +1,7 @@
 extends Sprite2D
 
 @export var max_length = 150
-@export var deadzone = 5
+@export var deadzone = 4
 var pos_vector: Vector2
 var pressing = false
 
