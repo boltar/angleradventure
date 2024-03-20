@@ -92,7 +92,7 @@ func _physics_process(_delta):
 	velocity.y = Input.get_axis("ui_up", "ui_down") * WALK_SPEED
 
 	if joystick.is_pressing():
-		var direction = joystick.posVector
+		var direction = joystick.pos_vector
 		if direction:
 			velocity = direction * WALK_SPEED
 		else:

@@ -24,6 +24,9 @@ func handle_line_released():
 
 func start_drawing(distance):
 	print_debug("at start_drawing")
+	if cast_state == EnumCastState.FLYING or cast_state == EnumCastState.SETTLING:
+		return
+
 	cast_state = EnumCastState.FLYING
 
 	line = Line2D.new()
