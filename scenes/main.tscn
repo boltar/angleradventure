@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cjvf8fflgan5h"]
+[gd_scene load_steps=34 format=3 uid="uid://cjvf8fflgan5h"]
 
 [ext_resource type="Texture2D" uid="uid://o2k0yxk3c30w" path="res://assets/32x32/[A]_type1/pipo-map001_at-mori.png" id="1_ic0ic"]
 [ext_resource type="Texture2D" uid="uid://bn8d180vlcq3i" path="res://assets/32x32/[A]_type1/pipo-map001_at-kusa.png" id="1_v0ebg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://yllxjxe8hoq8" path="res://assets/fish/fish000.png" id="7_ocype"]
 [ext_resource type="PackedScene" uid="uid://dfl3vffl113p6" path="res://scenes/fishing_animation.tscn" id="7_vlx08"]
 [ext_resource type="Texture2D" uid="uid://caalb1mw73ewy" path="res://assets/fish/fish001.png" id="8_bm4hl"]
+[ext_resource type="PackedScene" uid="uid://53f077l3bm1v" path="res://scenes/distance_label.tscn" id="8_fbqq8"]
 [ext_resource type="PackedScene" uid="uid://b5iy1njsol6iw" path="res://scenes/inventory_button.tscn" id="9_gf7ho"]
 [ext_resource type="Texture2D" uid="uid://qjamf61lra4g" path="res://assets/fish/fish002.png" id="9_xfl0v"]
 [ext_resource type="Texture2D" uid="uid://cb2ixeikclwdy" path="res://assets/fish/fish003.png" id="10_705hm"]
@@ -566,6 +567,9 @@ visible = false
 position = Vector2(-22, 8)
 
 [node name="FishingAnimation" parent="Player" instance=ExtResource("7_vlx08")]
+
+[node name="DistanceLabel" parent="Player" instance=ExtResource("8_fbqq8")]
+position = Vector2(64.75, 86.75)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 

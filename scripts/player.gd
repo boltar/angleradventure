@@ -48,6 +48,7 @@ func _ready():
 	inv_button.inventory_button_pressed.connect(_on_inventory_button_pressed)
 	cast_button.cast_button_pressed.connect(_on_cast_button_pressed)
 	cast_button.cast_button_released.connect(_on_cast_button_released)
+	cast_button.cast_button_holding.connect(_on_cast_button_holding)
 
 	for i in range(MAX_FISH_TYPE):
 		var fish_png = "res://assets/fish/fish%03d.png" % i
@@ -111,6 +112,10 @@ func _on_water_entered():
 
 func _on_cast_button_pressed():
 	print_debug("cast button pressed")
+
+
+func _on_cast_button_holding(distance):
+	$DistanceLabel.set_val(distance)
 
 
 func _on_cast_button_released(distance):

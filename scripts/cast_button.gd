@@ -2,6 +2,7 @@ extends Node2D
 
 signal cast_button_pressed
 signal cast_button_released(distance)
+signal cast_button_holding(distance)
 
 const MAX_DISTANCE = 500
 
@@ -19,6 +20,7 @@ func _process(delta):
 		distance += delta * 100
 		if distance > MAX_DISTANCE:
 			distance = MAX_DISTANCE
+		cast_button_holding.emit(distance)
 	else:
 		distance = 0
 
