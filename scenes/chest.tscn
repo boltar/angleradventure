@@ -10,9 +10,25 @@ script = ExtResource("1_82l4v")
 texture = ExtResource("1_f4mha")
 offset = Vector2(2.08165e-12, -100)
 
-[node name="Label" type="Label" parent="."]
+[node name="FishCountLabel" type="Label" parent="."]
 offset_left = -110.0
 offset_top = -177.0
 offset_right = -70.0
 offset_bottom = -154.0
 text = "fish count : 0"
+
+[node name="SellButton" type="Button" parent="."]
+offset_left = 27.0
+offset_top = -36.0
+offset_right = 98.0
+offset_bottom = -5.0
+text = "Sell all"
+
+[node name="CashLabel" type="Label" parent="."]
+offset_left = 10.0
+offset_top = -177.0
+offset_right = 97.0
+offset_bottom = -154.0
+text = "Cash: $0.00"
+
+[connection signal="pressed" from="SellButton" to="." method="_on_button_pressed"]

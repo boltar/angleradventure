@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://53f077l3bm1v"]
+
+[ext_resource type="Script" path="res://scripts/distance_label.gd" id="1_27t3r"]
+
+[node name="DistanceLabel" type="Node2D"]
+script = ExtResource("1_27t3r")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 108.0
+offset_bottom = 28.0
+text = "0 meters"

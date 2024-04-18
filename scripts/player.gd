@@ -30,18 +30,20 @@ var fish_names = [
 var sprites = []
 var fish_inventory = []
 var num_caught = 0
+var is_pressed = false
 
 @onready var joystick = $Camera2D/Joystick
 @onready var fish_scene = preload("res://scenes/fish.tscn")
 @onready var inv_button = $Camera2D/InventoryButton
 @onready var cast_button = $Camera2D/CastButton
+@onready var sell_all_button = $Chest/SellButton
 
 
 func _on_inventory_button_pressed(is_showing):
 	$Chest.visible = is_showing
 
-	if is_showing == false:
-		clear_all_fish()
+	#if is_showing == false:
+	#clear_all_fish()
 
 
 func _ready():
@@ -49,6 +51,7 @@ func _ready():
 	cast_button.cast_button_pressed.connect(_on_cast_button_pressed)
 	cast_button.cast_button_released.connect(_on_cast_button_released)
 	cast_button.cast_button_holding.connect(_on_cast_button_holding)
+	$Chest.sell_all_pressed.connect(_on_sell_all_button_pressed)
 
 	for i in range(MAX_FISH_TYPE):
 		var fish_png = "res://assets/fish/fish%03d.png" % i
@@ -68,11 +71,13 @@ func get_fish_inv_coordinate(fish_count):
 
 
 func clear_all_fish():
+	var num_sold = num_caught
 	for child in $Chest.get_children():
 		if child is Fish:
 			child.queue_free()
 	num_caught = 0
-	$Chest.set_val(num_caught)
+	$Chest.set_val(0)
+	return num_sold
 
 
 func _process(_delta):
@@ -81,7 +86,19 @@ func _process(_delta):
 
 	if Input.is_key_label_pressed(KEY_ESCAPE):
 		$Chest.visible = false
-		clear_all_fish()
+		#clear_all_fish()
+
+	if Input.is_key_label_pressed(KEY_C):
+		if is_pressed == false:
+			$Camera2D/CastButton/Button.button_pressed = true
+			$Camera2D/CastButton/Button.button_down.emit()
+			is_pressed = true
+
+	else:
+		if is_pressed:
+			is_pressed = false
+			$Camera2D/CastButton/Button.button_pressed = false
+			$Camera2D/CastButton/Button.button_up.emit()
 
 
 func _draw():
@@ -138,3 +155,9 @@ func _on_cast_button_released(distance):
 	fish.set_position(v + Vector2(-85, -125))
 
 	queue_redraw()
+
+
+func _on_sell_all_button_pressed():
+	var num_sold = clear_all_fish()
+	$Chest.add_cash(num_sold * 10.0)
+	print_debug("_on_sell_all_button_pressed")
