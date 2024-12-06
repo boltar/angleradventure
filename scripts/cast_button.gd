@@ -26,11 +26,11 @@ func _process(delta):
 
 
 func _on_button_up():
-	print_debug("on button released")
+	#print_debug("on button released")
 	Events.cast_button_released.emit(distance)
 	distance = 0
 
 
 func _on_button_down():
-	print_debug("on button pressed")
+	#print_debug("on button pressed")
 	Events.cast_button_pressed.emit()

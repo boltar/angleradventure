@@ -15,7 +15,7 @@ offset_left = -110.0
 offset_top = -177.0
 offset_right = -70.0
 offset_bottom = -154.0
-text = "fish count : 0"
+text = "fish count: 0"
 
 [node name="SellButton" type="Button" parent="."]
 offset_left = 27.0

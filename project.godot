@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Events="*res://scripts/events.gd"
+Tiles="*res://scripts/tiles.gd"
 
 [display]
 
