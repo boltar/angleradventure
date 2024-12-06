@@ -15,6 +15,9 @@ position = Vector2(2.08165e-12, 2.08165e-12)
 [node name="p2" type="Node2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Bobber" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(13, 0)
 texture = ExtResource("1_khcms")
+
+[node name="FishSprite" type="Sprite2D" parent="."]

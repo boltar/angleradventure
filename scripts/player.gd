@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-signal water_entered
-
 const GRAVITY = 200.0
 const WALK_SPEED = 800
 const MAX_FISH = 18
@@ -30,27 +28,20 @@ var fish_names = [
 var sprites = []
 var fish_inventory = []
 var num_caught = 0
-var is_pressed = false
 
-@onready var joystick = $Camera2D/Joystick
 @onready var fish_scene = preload("res://scenes/fish.tscn")
-@onready var inv_button = $Camera2D/InventoryButton
-@onready var cast_button = $Camera2D/CastButton
 @onready var sell_all_button = $Chest/SellButton
 
-
-func _on_inventory_button_pressed(is_showing):
-	$Chest.visible = is_showing
-
-	#if is_showing == false:
-	#clear_all_fish()
-
+func _on_inventory_button_pressed():
+	$Chest.visible = !$Chest.visible
 
 func _ready():
-	inv_button.inventory_button_pressed.connect(_on_inventory_button_pressed)
-	cast_button.cast_button_pressed.connect(_on_cast_button_pressed)
-	cast_button.cast_button_released.connect(_on_cast_button_released)
-	cast_button.cast_button_holding.connect(_on_cast_button_holding)
+
+	Events.connect("inventory_button_pressed", _on_inventory_button_pressed)
+	Events.connect("cast_button_released", _on_cast_button_released)
+	Events.connect("cast_button_pressed", _on_cast_button_pressed)
+	Events.connect("joystick_pressed", _on_joystick_pressed)
+
 	$Chest.sell_all_pressed.connect(_on_sell_all_button_pressed)
 
 	for i in range(MAX_FISH_TYPE):
@@ -81,59 +72,40 @@ func clear_all_fish():
 
 
 func _process(_delta):
-	if Input.is_key_label_pressed(KEY_I):
-		$Chest.visible = true
-
 	if Input.is_key_label_pressed(KEY_ESCAPE):
 		$Chest.visible = false
-		#clear_all_fish()
-
-	if Input.is_key_label_pressed(KEY_C):
-		if is_pressed == false:
-			$Camera2D/CastButton/Button.button_pressed = true
-			$Camera2D/CastButton/Button.button_down.emit()
-			is_pressed = true
-
-	else:
-		if is_pressed:
-			is_pressed = false
-			$Camera2D/CastButton/Button.button_pressed = false
-			$Camera2D/CastButton/Button.button_up.emit()
-
 
 func _draw():
 	pass
 
-
 func _physics_process(_delta):
-	velocity.x = Input.get_axis("ui_left", "ui_right") * WALK_SPEED
-	velocity.y = Input.get_axis("ui_up", "ui_down") * WALK_SPEED
 
-	if joystick.is_pressing():
-		var direction = joystick.pos_vector
-		if direction:
-			velocity = direction * WALK_SPEED
-		else:
-			velocity = Vector2(0, 0)
+	if Input.is_action_pressed("ui_left") || Input.is_action_pressed("ui_right"):
+		velocity.x = Input.get_axis("ui_left", "ui_right") * WALK_SPEED
+	else:
+		velocity.x = 0
+	if Input.is_action_pressed("ui_up") || Input.is_action_pressed("ui_down"):
+		velocity.y = Input.get_axis("ui_up", "ui_down") * WALK_SPEED
+	else:
+		velocity.y = 0
 
-	if velocity.x > 0:
-		$Sprite2D.flip_h = false
-	elif velocity.x < 0:
-		$Sprite2D.flip_h = true
+	$Sprite2D.flip_h = velocity.x < 0
 	move_and_slide()
 
 
-func _on_water_entered():
-	print("water entered")
+func _on_joystick_pressed(pos_vector):
+	print("_on_joystick_pressed")
+	if pos_vector:
+		velocity = pos_vector * WALK_SPEED
+	else:
+		velocity = Vector2(0,0)
+	$Sprite2D.flip_h = velocity.x < 0
 
+	$Chest.visible = false
+	move_and_slide()
 
 func _on_cast_button_pressed():
 	print_debug("cast button pressed")
-
-
-func _on_cast_button_holding(distance):
-	$DistanceLabel.set_val(distance)
-
 
 func _on_cast_button_released(distance):
 	print_debug("cast button released: ", distance)
@@ -142,9 +114,9 @@ func _on_cast_button_released(distance):
 	if num_caught > MAX_FISH:
 		return
 	$Chest.set_val(num_caught)
-	$FishingAnimation.start_drawing(distance, $Sprite2D.flip_h)
 	var i = rng.randi_range(0, 15)
 	print(fish_names[i])
+	$FishingAnimation.start_drawing(distance, $Sprite2D.flip_h, sprites[i], fish_names[i])
 	var fish = fish_scene.instantiate()
 
 	fish.update_sprite(sprites[i])
@@ -156,8 +128,6 @@ func _on_cast_button_released(distance):
 
 	queue_redraw()
 
-
 func _on_sell_all_button_pressed():
 	var num_sold = clear_all_fish()
 	$Chest.add_cash(num_sold * 10.0)
-	print_debug("_on_sell_all_button_pressed")

@@ -15,5 +15,3 @@ shape = SubResource("RectangleShape2D_422ph")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_2m435")
-
-[connection signal="water_entered" from="." to="." method="_on_water_entered"]

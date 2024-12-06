@@ -1,22 +1,25 @@
 extends Node2D
 
-signal fishing_animation_finished
 enum EnumCastState { INIT, HOLDING, FLYING, SETTLING, DONE }
 var time = 0
 var _distance = 0
 
-@onready var sprite = $Sprite
+@onready var bobber = $Bobber
 @onready var line: Line2D
 @onready var p1_init_pos = $p1.position
 @onready var p2_init_pos = $p2.position
 @onready var cast_state: EnumCastState = EnumCastState.INIT
+@onready var fish_scene = preload("res://scenes/fish.tscn")
 
+var fish
 
-func clear_line():
+func _ready():
+	pass
+
+func destroy_fish_scene():
 	for child in get_children():
-		if child is Line2D:
+		if child is Fish:
 			child.queue_free()
-
 
 func handle_line_released():
 	print_debug("line released")
@@ -24,8 +27,13 @@ func handle_line_released():
 
 # h_flip = false --> RIGHT
 #          true  --> LEFT
-func start_drawing(distance, h_flip):
-	print_debug("at start_drawing")
+func start_drawing(distance, h_flip, fish_type, fish_name):
+
+	fish = fish_scene.instantiate()
+	fish.update_sprite(fish_type)
+	fish.update_name(fish_name)
+
+	$Bobber.visible = true
 	if cast_state == EnumCastState.FLYING or cast_state == EnumCastState.SETTLING:
 		return
 
@@ -68,6 +76,10 @@ func _draw():
 
 
 func _physics_process(delta):
+
+	if Input.is_anything_pressed():
+		destroy_fish_scene()
+
 	if cast_state != EnumCastState.FLYING and cast_state != EnumCastState.SETTLING:
 		return
 
@@ -84,16 +96,22 @@ func _physics_process(delta):
 			print_debug("at DONE")
 			time = 0
 			_distance = 0
+
+			fish.scale *= 1.5
+			fish.position = $p2.position
+
 			$p1.position = p1_init_pos
 			$p2.position = p2_init_pos
 			cast_state = EnumCastState.DONE
+			$Bobber.visible = false
+			add_child(fish)
 		return
 
 	if cast_state == EnumCastState.FLYING:
-		sprite.position = bezier(time)
+		bobber.position = bezier(time)
 		time += delta
 
-		line.add_point(sprite.position)
+		line.add_point(bobber.position)
 
 		if time >= 1:
 			time = 1

@@ -9,7 +9,7 @@ var pressing = false
 
 
 func _ready():
-	max_length *= parent.scale.x * 4
+	max_length *= parent.scale.x
 
 
 func _process(delta):
@@ -19,12 +19,15 @@ func _process(delta):
 		else:
 			var angle = parent.global_position.angle_to_point(get_global_mouse_position())
 			global_position.x = parent.global_position.x + cos(angle) * max_length
+			global_position.y = parent.global_position.y + sin(angle) * max_length
 		calculate_vector()
-
+		Events.joystick_pressed.emit(parent.pos_vector)
 	else:
 		global_position = lerp(global_position, parent.global_position, delta * 50)
-		parent.pos_vector = Vector2(0, 0)
-
+		var zero_v = Vector2(0,0)
+		if parent.pos_vector != zero_v:
+			parent.pos_vector = Vector2(0, 0)
+			Events.joystick_pressed.emit(parent.pos_vector)
 
 func calculate_vector():
 	var xdiff = global_position.x - parent.global_position.x

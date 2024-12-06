@@ -1,10 +1,12 @@
-extends Node2D
-
+extends Label
 
 func set_val(val):
-	$Label.text = str(int(val)) + " meters"
+	text = str(int(val)) + " meters"
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass  # Replace with function body.
+	Events.connect("cast_button_holding", _on_cast_button_holding)
+
+func _on_cast_button_holding(val):
+	set_val(val)
