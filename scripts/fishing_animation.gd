@@ -1,6 +1,5 @@
 extends Node2D
 
-enum EnumCastState { INIT, HOLDING, FLYING, SETTLING, DONE }
 var time = 0
 var _distance = 0
 
@@ -8,19 +7,12 @@ var _distance = 0
 @onready var line: Line2D
 @onready var p1_init_pos = $p1.position
 @onready var p2_init_pos = $p2.position
-@onready var cast_state: EnumCastState = EnumCastState.INIT
 @onready var fish_scene = preload("res://scenes/fish.tscn")
 
-#var fish
 
 func _ready():
 	print_debug(p2_init_pos)
-	pass
 
-#func destroy_fish_scene():
-	#for child in get_children():
-		#if child is Fish:
-			#child.queue_free()
 
 func handle_line_released():
 	print_debug("line released")
@@ -29,16 +21,11 @@ func handle_line_released():
 # h_flip = false --> RIGHT
 #          true  --> LEFT
 func start_drawing(distance, h_flip):
-
-	#fish = fish_scene.instantiate()
-	#fish.update_sprite(fish_type)
-	#fish.update_name(fish_name)
-
 	$Bobber.visible = true
-	if cast_state == EnumCastState.FLYING or cast_state == EnumCastState.SETTLING:
+	if Globals.CastState == Enums.CastState.FLYING or Globals.CastState == Enums.CastState.SETTLING:
 		return
 
-	cast_state = EnumCastState.FLYING
+	Globals.CastState = Enums.CastState.FLYING
 
 	line = Line2D.new()
 	line.width = 1
@@ -61,13 +48,14 @@ func bezier(t):
 
 
 func _draw():
-	if cast_state != EnumCastState.FLYING and cast_state != EnumCastState.SETTLING:
+	if (
+		Globals.CastState != Enums.CastState.FLYING
+		and Globals.CastState != Enums.CastState.SETTLING
+	):
 		return
 
 	var points = [$p0.position]
 	var num_slices = 10
-
-	#print_debug("distance : ", _distance)
 
 	for n in range(num_slices):
 		points.append(bezier(float(n + 1) / num_slices))
@@ -77,11 +65,13 @@ func _draw():
 
 
 func _physics_process(delta):
-
-	if cast_state != EnumCastState.FLYING and cast_state != EnumCastState.SETTLING:
+	if (
+		Globals.CastState != Enums.CastState.FLYING
+		and Globals.CastState != Enums.CastState.SETTLING
+	):
 		return
 
-	if cast_state == EnumCastState.SETTLING:
+	if Globals.CastState == Enums.CastState.SETTLING:
 		for child in get_children():
 			if child is Line2D:
 				child.queue_free()
@@ -89,24 +79,20 @@ func _physics_process(delta):
 		queue_redraw()
 		if $p1.position.y < 0:
 			$p1.position += Vector2(0, 100 * delta)
-			#print_debug($p1.position)
 		else:
 			print_debug("at DONE")
 			time = 0
 			_distance = 0
 
-			#fish.scale *= 1.5
-			#fish.position = $p2.position
 			var bobber_landed_pos = $p2.position
 			$p1.position = p1_init_pos
 			$p2.position = p2_init_pos
-			cast_state = EnumCastState.DONE
+			Globals.CastState = Enums.CastState.DONE
 			$Bobber.visible = false
 			Events.bobber_landed.emit(to_global(bobber_landed_pos))
-			#add_child(fish)
 		return
 
-	if cast_state == EnumCastState.FLYING:
+	if Globals.CastState == Enums.CastState.FLYING:
 		bobber.position = bezier(time)
 		time += delta
 
@@ -114,4 +100,4 @@ func _physics_process(delta):
 
 		if time >= 1:
 			time = 1
-			cast_state = EnumCastState.SETTLING
+			Globals.CastState = Enums.CastState.SETTLING

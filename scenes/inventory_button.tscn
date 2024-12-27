@@ -12,7 +12,7 @@ offset_top = -2.0
 offset_right = 124.0
 offset_bottom = 54.0
 size_flags_horizontal = 0
-text = "Inventory"
+text = "Inventory (0)"
 icon = ExtResource("2_ex25f")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

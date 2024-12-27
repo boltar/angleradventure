@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://chcjtc4tfd7q4" path="res://assets/ui/controls/Joystick.png" id="1_44pmr"]
 [ext_resource type="Script" path="res://scripts/joystick.gd" id="1_vg82u"]
 [ext_resource type="Texture2D" uid="uid://d2yrf0w6tvopx" path="res://assets/ui/controls/SmallHandle.png" id="2_kahgn"]
-[ext_resource type="Script" path="res://scripts/Knob.gd" id="4_b8cxm"]
+[ext_resource type="Script" path="res://scripts/knob.gd" id="3_lryyg"]
 
 [node name="Joystick" type="Node2D"]
 script = ExtResource("1_vg82u")
@@ -13,7 +13,7 @@ texture = ExtResource("1_44pmr")
 
 [node name="Knob" type="Sprite2D" parent="."]
 texture = ExtResource("2_kahgn")
-script = ExtResource("4_b8cxm")
+script = ExtResource("3_lryyg")
 
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)

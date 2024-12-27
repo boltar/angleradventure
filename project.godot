@@ -19,6 +19,9 @@ config/icon="res://icon.svg"
 
 Events="*res://scripts/events.gd"
 Tiles="*res://scripts/tiles.gd"
+Audio="*res://scripts/audio.gd"
+Enums="*res://scripts/enums.gd"
+Globals="*res://scripts/globals.gd"
 
 [display]
 

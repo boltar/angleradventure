@@ -7,6 +7,8 @@
 script = ExtResource("1_82l4v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(61, 102)
+scale = Vector2(1.7, 1.7)
 texture = ExtResource("1_f4mha")
 offset = Vector2(2.08165e-12, -100)
 
@@ -19,9 +21,9 @@ text = "fish count: 0"
 
 [node name="SellButton" type="Button" parent="."]
 offset_left = 27.0
-offset_top = -36.0
+offset_top = 31.0
 offset_right = 98.0
-offset_bottom = -5.0
+offset_bottom = 62.0
 text = "Sell all"
 
 [node name="CashLabel" type="Label" parent="."]

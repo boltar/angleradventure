@@ -14,6 +14,7 @@ func _ready():
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if is_pressed():
@@ -32,5 +33,7 @@ func _on_button_up():
 
 
 func _on_button_down():
-	#print_debug("on button pressed")
+	print("cast_button: " + str(Globals.CastState))
+	if Globals.is_casting():
+		return
 	Events.cast_button_pressed.emit()
